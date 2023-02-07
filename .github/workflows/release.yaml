@@ -63,7 +63,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           VERSION: ${{ needs.check_if_version_upgraded.outputs.version }}
       - name: Tag release
-        if: steps.tests.outcome == 'success' && steps.deno_tests.outcome == 'success'
+        if: steps.tests.outcome == 'success'
         uses: softprops/action-gh-release@v1
         with:
           name: Mutable JS v${{ needs.check_if_version_upgraded.outputs.version }}
