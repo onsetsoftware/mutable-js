@@ -45,7 +45,7 @@ jobs:
       - name: Create npm release
         if: steps.tests.outcome == 'success'
         run: |
-          if [ "$(npm --prefix $GITHUB_WORKSPACE/javascript show . version)" = "$VERSION" ]; then
+          if [ "$(npm . version)" = "$VERSION" ]; then
             echo "This version is already published"
             exit 0
           fi
@@ -58,7 +58,7 @@ jobs:
             echo "Can't publish on NPM, You need a NPM_TOKEN secret."
             false
           fi
-          npm publish $GITHUB_WORKSPACE/javascript $EXTRA_ARGS
+          npm publish $EXTRA_ARGS
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           VERSION: ${{ needs.check_if_version_upgraded.outputs.version }}
