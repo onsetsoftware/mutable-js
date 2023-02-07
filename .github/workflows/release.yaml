@@ -37,7 +37,7 @@ jobs:
         id: tests
         run: |
           npm install
-          npm run test
+          npx vitest run
       - name: Build Release
         id: build_release
         run: |
