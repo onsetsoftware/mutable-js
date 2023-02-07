@@ -1,0 +1,29 @@
+{
+  "name": "@onsetsoftware/mutable-js",
+  "private": false,
+  "version": "0.1.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest --watch"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.1",
+    "typescript": "^4.6.4",
+    "vite": "^3.0.0",
+    "vite-plugin-dts": "^1.4.0",
+    "vitest": "^0.18.1"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/mutable-js.es.js",
+      "require": "./dist/mutable-js.umd.js"
+    }
+  },
+  "types": "./dist/types/index.d.ts"
+}
