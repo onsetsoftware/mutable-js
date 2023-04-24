@@ -1,7 +1,7 @@
 {
   "name": "@onsetsoftware/mutable-js",
   "private": false,
-  "version": "0.1.4",
+  "version": "0.1.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -23,7 +23,8 @@
   "exports": {
     ".": {
       "import": "./dist/mutable-js.es.js",
-      "require": "./dist/mutable-js.umd.js"
+      "require": "./dist/mutable-js.umd.js",
+      "types": "./dist/types/index.d.ts"
     }
   },
   "types": "./dist/types/index.d.ts"
