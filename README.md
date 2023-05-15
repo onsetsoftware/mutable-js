@@ -35,6 +35,23 @@ const arr = [1, 2, 3, 4, 5];
 filter(arr, (x) => x % 2 === 0); // => arr = [2, 4]
 ```
 
+### Filter List
+
+Removes values from an [Automerge List](https://automerge.org/docs/tsapi/interfaces/List/) that do not match a predicate.
+
+```typescript
+import { filterList } from '@onsetsoftware/mutable-js';
+import { change, from } from "@automerge/automerge";
+
+let doc = from({ arr: [1, 2, 3, 4, 5] });
+
+doc = change(doc, (doc) => {
+  filterList(doc.arr, (x) => x % 2 === 0);
+});
+
+console.log(doc); // => { arr: [2, 4] }
+```
+
 ### Map
 
 Applies a function to each value in an array.
@@ -154,5 +171,5 @@ updateEntity(people, person); // => john's age === 21
 Deletes an entity from an entity state.
 
 ```typescript
-deleteEntity(people, "id-1"); // => people = { ids: [], entities: {} } 
+deleteEntity(people, "id-1"); // => people = { ids: [], entities: {} }
 ```
