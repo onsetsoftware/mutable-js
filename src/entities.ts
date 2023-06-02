@@ -54,6 +54,6 @@ export function deleteEntityList<TEntity extends HasId<TEntity>>(
   id: GetIdType<TEntity>,
 ) {
   filterList(state.ids, (i) => i !== id);
-  delete state.entities[id];
+  delete state.entities[id as keyof typeof state.entities];
   return state;
 }
