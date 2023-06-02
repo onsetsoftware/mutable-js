@@ -1,54 +1,59 @@
 import type { List } from "@automerge/automerge";
+import type {
+  EntityState,
+  GetIdType,
+  HasId,
+} from "@onsetsoftware/entity-state";
 import { filter } from "./filter";
 import { filterList } from "./filter-list";
 
-export type EntityState<T extends { id: string }> = {
-  ids: string[];
-  entities: Record<string, T>;
+type AutomergeEntityState<TEntity extends HasId<TEntity>> = {
+  ids: List<GetIdType<TEntity>>;
+  entities: Record<GetIdType<TEntity>, TEntity>;
 };
 
-export function addEntity<T extends { id: string }>(
-  state: EntityState<T>,
-  entity: T,
-): EntityState<T> {
+export function addEntity<TEntity extends HasId<TEntity>>(
+  state: EntityState<TEntity>,
+  entity: TEntity,
+) {
   state.ids.push(entity.id);
   state.entities[entity.id] = entity;
 
   return state;
 }
 
-export function addEntities<T extends { id: string }>(
-  state: EntityState<T>,
-  entities: T[],
-): EntityState<T> {
+export function addEntities<TEntity extends HasId<TEntity>>(
+  state: EntityState<TEntity>,
+  entities: TEntity[],
+) {
   for (const entity of entities) addEntity(state, entity);
 
   return state;
 }
 
-export function updateEntity<T extends { id: string }>(
-  state: EntityState<T>,
-  entity: Partial<T> & Pick<T, "id">,
-): EntityState<T> {
+export function updateEntity<TEntity extends HasId<TEntity>>(
+  state: EntityState<TEntity>,
+  entity: Partial<TEntity> & Pick<TEntity, "id">,
+) {
   Object.assign(state.entities[entity.id], entity);
 
   return state;
 }
 
-export function deleteEntity<T extends { id: string }>(
-  state: EntityState<T>,
-  id: string,
-): EntityState<T> {
+export function deleteEntity<TEntity extends HasId<TEntity>>(
+  state: EntityState<TEntity>,
+  id: GetIdType<TEntity>,
+) {
   filter(state.ids, (i) => i !== id);
   delete state.entities[id];
   return state;
 }
 
-export function deleteEntityList<T extends { id: string }>(
-  state: EntityState<T>,
-  id: string,
-): EntityState<T> {
-  filterList(state.ids as List<string>, (i) => i !== id);
+export function deleteEntityList<TEntity extends HasId<TEntity>>(
+  state: AutomergeEntityState<TEntity>,
+  id: GetIdType<TEntity>,
+) {
+  filterList(state.ids, (i) => i !== id);
   delete state.entities[id];
   return state;
 }

@@ -1,9 +1,11 @@
+import { change, from } from "@automerge/automerge";
+import { EntityState } from "@onsetsoftware/entity-state";
 import { beforeEach, describe, expect, test } from "vitest";
 import {
   addEntities,
   addEntity,
   deleteEntity,
-  EntityState,
+  deleteEntityList,
   updateEntity,
 } from "../src/entities";
 
@@ -84,5 +86,18 @@ describe("Entity State", () => {
 
     expect(people.ids).toEqual([]);
     expect(people.entities["id-1"]).toEqual(undefined);
+  });
+
+  test("entity can be deleted from an automerge document", () => {
+    let doc = from({
+      people,
+    });
+
+    doc = change(doc, (doc) => {
+      deleteEntityList<Person>(doc.people, "id-1");
+    });
+
+    expect(doc.people.ids).toEqual([]);
+    expect(doc.people.entities["id-1"]).toEqual(undefined);
   });
 });

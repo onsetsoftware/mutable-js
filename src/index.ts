@@ -4,7 +4,6 @@ export { filter } from "./filter";
 export { filterList } from "./filter-list";
 export { moveWithin, moveWithinOrdered } from "./move-within";
 export {
-  type EntityState,
   addEntity,
   addEntities,
   updateEntity,
