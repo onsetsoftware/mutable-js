@@ -1,4 +1,4 @@
-import type { List } from "@automerge/automerge";
+import type { Extend, List } from "@automerge/automerge";
 import type {
   EntityState,
   GetIdType,
@@ -8,8 +8,8 @@ import { filter } from "./filter";
 import { filterList } from "./filter-list";
 
 type AutomergeEntityState<TEntity extends HasId<TEntity>> = {
-  ids: List<GetIdType<TEntity>>;
-  entities: Record<GetIdType<TEntity>, TEntity>;
+  ids: List<Extend<GetIdType<TEntity>>>;
+  entities: Extend<Record<GetIdType<TEntity>, TEntity>>;
 };
 
 export function addEntity<TEntity extends HasId<TEntity>>(
