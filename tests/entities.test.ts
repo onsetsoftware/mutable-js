@@ -5,32 +5,30 @@ import {
   addEntities,
   addEntity,
   deleteEntity,
-  deleteEntityList,
   updateEntity,
 } from "../src/entities";
+type Person = {
+  name: string;
+  age: number;
+  id: string;
+};
+
+let people: EntityState<Person>;
+
+beforeEach(() => {
+  people = {
+    ids: ["id-1"],
+    entities: {
+      "id-1": {
+        name: "John",
+        age: 20,
+        id: "id-1",
+      },
+    },
+  };
+});
 
 describe("Entity State", () => {
-  type Person = {
-    name: string;
-    age: number;
-    id: string;
-  };
-
-  let people: EntityState<Person>;
-
-  beforeEach(() => {
-    people = {
-      ids: ["id-1"],
-      entities: {
-        "id-1": {
-          name: "John",
-          age: 20,
-          id: "id-1",
-        },
-      },
-    };
-  });
-
   test("entity can be added", () => {
     const person: Person = {
       name: "Jane",
@@ -87,14 +85,16 @@ describe("Entity State", () => {
     expect(people.ids).toEqual([]);
     expect(people.entities["id-1"]).toEqual(undefined);
   });
+});
 
+describe("Automerge Entity State", () => {
   test("entity can be deleted from an automerge document", () => {
     let doc = from({
       people,
     });
 
     doc = change(doc, (doc) => {
-      deleteEntityList<Person>(doc.people, "id-1");
+      deleteEntity(doc.people, "id-1");
     });
 
     expect(doc.people.ids).toEqual([]);
