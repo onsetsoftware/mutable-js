@@ -15,7 +15,7 @@
     "prettier": "^2.8.1",
     "typescript": "^5.1.0",
     "vite": "^3.0.0",
-    "vite-plugin-dts": "^2.3.0",
+    "vite-plugin-dts": "^3.0.0",
     "vitest": "^0.32.0"
   },
   "peerDependencies": {
@@ -24,10 +24,12 @@
   "files": [
     "dist"
   ],
+  "main": "./dist/mutable-js.umd.cjs",
+  "module": "./dist/mutable-js.js",
   "exports": {
     ".": {
-      "import": "./dist/mutable-js.es.js",
-      "require": "./dist/mutable-js.umd.js",
+      "import": "./dist/mutable-js.js",
+      "require": "./dist/mutable-js.umd.cjs",
       "types": "./dist/types/index.d.ts"
     }
   },
