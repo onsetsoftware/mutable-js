@@ -1,16 +1,9 @@
-import type { Extend, List } from "@automerge/automerge";
 import type {
   EntityState,
   GetIdType,
   HasId,
 } from "@onsetsoftware/entity-state";
 import { filter } from "./filter";
-import { filterList } from "./filter-list";
-
-type AutomergeEntityState<TEntity extends HasId<TEntity>> = {
-  ids: List<Extend<GetIdType<TEntity>>>;
-  entities: Extend<Record<GetIdType<TEntity>, TEntity>>;
-};
 
 export function addEntity<TEntity extends HasId<TEntity>>(
   state: EntityState<TEntity>,
@@ -46,14 +39,5 @@ export function deleteEntity<TEntity extends HasId<TEntity>>(
 ) {
   filter(state.ids, (i) => i !== id);
   delete state.entities[id];
-  return state;
-}
-
-export function deleteEntityList<TEntity extends HasId<TEntity>>(
-  state: AutomergeEntityState<TEntity>,
-  id: GetIdType<TEntity>,
-) {
-  filterList(state.ids, (i) => i !== id);
-  delete state.entities[id as keyof typeof state.entities];
   return state;
 }

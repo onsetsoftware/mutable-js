@@ -11,13 +11,13 @@ export default defineConfig({
     lib: {
       entry: resolvePath("src/index.ts"),
       name: "MutableJs",
-      fileName: (format) => `mutable-js.${format}.js`,
+      fileName: `mutable-js`,
     },
   },
   plugins: [
     dts({
       entryRoot: resolvePath("src"),
-      outputDir: resolvePath("dist/types"),
+      outDir: resolvePath("dist/types"),
     }),
   ],
 });
