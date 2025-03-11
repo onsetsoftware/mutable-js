@@ -1,21 +1,16 @@
-import { Apply, getPatch } from "fast-array-diff";
+import { calcPatch } from "fast-myers-diff";
 
-function applyPatch<T>(a: T[], patch: Apply<T>) {
-  for (let i = 0; i < patch.length; ++i) {
-    const patchItem = patch[i];
-    if (patchItem.type === "add") {
-      a.splice(patchItem.newPos, 0, ...patchItem.items);
-    } else if (patchItem.type === "remove") {
-      a.splice(
-        patchItem.newPos,
-        "length" in patchItem ? patchItem.length : patchItem.items.length
-      );
-    }
+function applyPatches<T>(a: T[], patches: [number, number, T[]][]): void {
+  for (const [start, end, value] of patches) {
+    a.splice(start, end - start, ...value);
   }
 }
 
 export const updateArray = (source: unknown[], target: unknown[]) => {
-  const diff = getPatch(source, target);
-  applyPatch(source, diff);
+  const patches = calcPatch(source.slice(0), target);
+  const x = [...patches].reverse();
+
+  applyPatches(source, x);
+
   return source;
 };

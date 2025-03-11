@@ -1,6 +1,7 @@
 import { next } from "@automerge/automerge";
 import { describe, expect, test } from "vitest";
 import { updateArray } from "../src/update-array";
+import { source, target } from "./data/update-array";
 
 describe("update array in place", () => {
   const tests = [
@@ -39,5 +40,12 @@ describe("update array in place", () => {
 
       expect(s2a).toEqual(updated.arr);
     });
+  });
+
+  test("Long array", () => {
+    const s = source.slice(0);
+
+    const result = updateArray(s, target);
+    expect(result).toStrictEqual(target);
   });
 });
