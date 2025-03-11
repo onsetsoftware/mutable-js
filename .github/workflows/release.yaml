@@ -10,13 +10,13 @@ jobs:
     name: Check if package version has been upgraded
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.version-updated.outputs.current-package-version }}
-      has_updated: ${{ steps.version-updated.outputs.has-updated }}
+      version: ${{ steps.version-updated.outputs.current-version }}
+      has_updated: ${{ steps.version-updated.outputs.current-version != steps.version-updated.outputs.previous-version }}
     steps:
-      - uses: JiPaix/package-json-updated-action@v1.0.5
+      - uses: salsify/action-detect-and-tag-new-version@v2
         id: version-updated
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          create-tag: false
   publish-js:
     name: Publish JS package
     runs-on: ubuntu-latest
